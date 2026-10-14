@@ -38,6 +38,9 @@ Y_RANGE = (-10, 10)
 TICK_STEP = 2
 
 PANEL_ANCHOR = RIGHT * 4.2 + UP * 0.55
+# Beat 3 shortcut boxes sit in the right column, under the live stats row.
+SHORTCUT_STEP_ANCHOR = PANEL_ANCHOR + DOWN * 1.88
+SHORTCUT_STEP_MAX_WIDTH = 3.25
 GRAPH_SHIFT = LEFT * 2.1 + DOWN * 0.15
 
 
@@ -650,13 +653,23 @@ class QuadraticSymmetryLayout:
         return group
 
     def reveal_boxed_step(self, latex: str, box_group: VGroup, index: int) -> VGroup:
-        """Add one worksheet-style boxed formula step (beat 3)."""
-        step = MathTex(latex, font_size=FORMULA_FONT_SIZE, color=INK)
-        box = SurroundingRectangle(step, color=BOX_STROKE, buff=0.18, stroke_width=2)
+        """Reveal one boxed shortcut step in the right panel (replaces the prior step)."""
+        if len(box_group) > 0:
+            previous = box_group[-1]
+            self.scene.play(FadeOut(previous), run_time=0.28)
+            box_group.remove(previous)
+
+        font_size = max(FORMULA_FONT_SIZE, MIN_FONT)
+        step = MathTex(latex, font_size=font_size, color=INK)
+        if step.width > SHORTCUT_STEP_MAX_WIDTH:
+            # Keep math legible: reduce font down to MIN_FONT, not below via scaling.
+            while step.width > SHORTCUT_STEP_MAX_WIDTH and font_size > MIN_FONT:
+                font_size -= 1
+                step = MathTex(latex, font_size=font_size, color=INK)
+        box = SurroundingRectangle(step, color=BOX_STROKE, buff=0.14, stroke_width=2)
         group = VGroup(step, box)
-        anchor = LEFT * 3.85 + UP * (1.35 - index * 1.05)
-        group.move_to(anchor, aligned_edge=LEFT)
+        group.move_to(SHORTCUT_STEP_ANCHOR)
         box_group.add(group)
-        self.scene.play(FadeIn(group, shift=UP * 0.15), run_time=0.55)
+        self.scene.play(FadeIn(group, shift=UP * 0.12), run_time=0.5)
         self.scene.wait(0.65)
         return group

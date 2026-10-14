@@ -10,17 +10,16 @@ class Beat02WholeRoots(Scene):
 
     def construct(self) -> None:
         layout = QuadraticSymmetryLayout(self)
-        layout.build()
+        layout.build(title="Group 2 · Keep the constant fixed")
 
         c = 24
-        # -25 dropped: m = 12.5 and a root at 24 lies outside x in [0, 14].
         b_values = [-10, -11, -14]
 
         layout.set_state(b_values[0], c, ghost_previous=False)
         self.wait(STEP_HOLD)
 
         for b in b_values[1:]:
-            layout.animate_to(b, c, run_time=0.85)
+            layout.animate_to(b, c, run_time=0.7)
             self.wait(STEP_HOLD)
 
         layout.show_question("Which b gives whole-number roots?")

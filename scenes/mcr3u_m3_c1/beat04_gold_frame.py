@@ -21,15 +21,23 @@ class Beat04GoldFrame(Scene):
 
     def construct(self) -> None:
         layout = QuadraticSymmetryLayout(self)
-        layout.build(show_panel=False)
+        layout.build(show_panel=False, d_bracket_labels=False)
 
         b = -10
-        c_steps = [25, 24, 21, 16, 9]
-        layout.set_state(b, c_steps[0], ghost_previous=False)
+        c_steps = [25, 24, 21, 20, 16, 9]
+        layout.set_state(
+            b,
+            c_steps[0],
+            ghost_previous=False,
+            show_graph_labels=False,
+            show_d_markers=True,
+        )
         self.wait(STEP_HOLD * 0.5)
 
         for c in c_steps[1:]:
-            layout.animate_to(b, c, run_time=0.6)
+            layout.animate_to(
+                b, c, run_time=0.55, show_graph_labels=False
+            )
             self.wait(STEP_HOLD * 0.35)
 
         # Layer additional parabolas for the summary look (frame 4 mockup).

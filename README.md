@@ -34,9 +34,9 @@ Scenes in `scenes/mcr3u_m3_c1/`:
 
 | Scene | File | Beat |
 |-------|------|------|
-| `Beat01RootsNext` | `beat01_roots_next.py` | Lower `c` with `b = -10` |
+| `Beat01RootsNext` | `beat01_roots_next.py` | Lower `c` with `b = -10` (includes `c = 20`) |
 | `Beat02WholeRoots` | `beat02_whole_roots.py` | Vary `b` with `c = 24` |
-| `Beat03Formula` | `beat03_formula.py` | Mark `m`, `d`, and the root formula |
+| `Beat03Formula` | `beat03_formula.py` | Mark `m`, `d`, worksheet boxed shortcut steps |
 | `Beat04GoldFrame` | `beat04_gold_frame.py` | Silent gold summary frame |
 
 Render all four:
